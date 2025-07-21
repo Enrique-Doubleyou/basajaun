@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transiberica: Basajaun</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #212529;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      max-height: 280px;
+    }
+    main {
+      padding: 1rem;
+      max-width: 700px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+      margin: 0.5em 0;
+      color: #1d3557;
+    }
+    h2 {
+      font-size: 1.3em;
+      margin-bottom: 1em;
+      color: #457b9d;
+    }
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      margin-bottom: 2em;
+    }
+    .komoot {
+      margin-bottom: 2em;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #6c757d;
+    }
+    #counter {
+      font-size: 0.9em;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://yourdomain.com/banner.jpg" alt="Bannerfoto Basajaun">
+  </header>
+
+  <main>
+    <h1>Transiberica: Basajaun</h1>
+    <h2>Livetracking unseres Teams</h2>
+
+    <!-- Livetracking Embed (Platzhalter) -->
+    <iframe src="https://followmychallenge.com/live/basajaun-teamname" title="Follow My Challenge Livetracking"></iframe>
+
+    <div class="komoot">
+      <h2>Gesamte Race-Route auf komoot</h2>
+      <!-- Komoot Embed Link Beispiel -->
+      <iframe src="https://www.komoot.de/tour/12345678/embed" title="Komoot Basajaun Route"></iframe>
+    </div>
+
+    <p>Danke, dass ihr uns begleitet – wir freuen uns über jede Unterstützung entlang der Strecke oder digital von zuhause!<br><strong>Robbie & Kike</strong></p>
+
+    <div id="counter">Seitenaufrufe: <span id="visitorCount">nicht verfügbar</span></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Robbie & Kike
+  </footer>
+
+  <!-- Seitenzähler mit Fehlerbehandlung -->
+  <script>
+    fetch("https://api.countapi.xyz/hit/robbie-kike-basajaun/visits")
+      .then(res => {
+        if (!res.ok) throw new Error("Netzwerkfehler");
+        return res.json();
+      })
+      .then(data => {
+        document.getElementById("visitorCount").textContent = data.value;
+      })
+      .catch(() => {
+        document.getElementById("visitorCount").textContent = "nicht verfügbar";
+      });
+  </script>
+</body>
+</html>
