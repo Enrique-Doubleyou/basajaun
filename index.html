@@ -79,40 +79,20 @@
       <iframe src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
     </div>
     
-<!-- Bildergalerie mit Lightbox -->
-    <div class="bildergalerie" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 2em;">
-      <a href="#img1"><img src="bild1.jpg" alt="Bild 1" style="width: 32%; max-width: 200px; height: auto;"></a>
-      <a href="#img2"><img src="bild2.jpg" alt="Bild 2" style="width: 32%; max-width: 200px; height: auto;"></a>
-      <a href="#img3"><img src="bild3.jpg" alt="Bild 3" style="width: 32%; max-width: 200px; height: auto;"></a>
-      <a href="#img4"><img src="bild4.jpg" alt="Bild 4" style="width: 32%; max-width: 200px; height: auto;"></a>
-      <a href="#img5"><img src="bild5.jpg" alt="Bild 5" style="width: 32%; max-width: 200px; height: auto;"></a>
-      <a href="#img6"><img src="bild6.jpg" alt="Bild 6" style="width: 32%; max-width: 200px; height: auto;"></a>
+<!<!-- Bildergalerie -->
+    <div class="bildergalerie">
+      <img src="bild1.jpg" alt="Bild 1" onclick="openModal('bild1.jpg')">
+      <img src="bild2.jpg" alt="Bild 2" onclick="openModal('bild2.jpg')">
+      <img src="bild3.jpg" alt="Bild 3" onclick="openModal('bild3.jpg')">
+      <img src="bild4.jpg" alt="Bild 4" onclick="openModal('bild4.jpg')">
+      <img src="bild5.jpg" alt="Bild 5" onclick="openModal('bild5.jpg')">
+      <img src="bild6.jpg" alt="Bild 6" onclick="openModal('bild6.jpg')">
     </div>
 
-    <!-- Lightbox-Container -->
-    <div id="img1" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild1.jpg" alt="Bild 1 groß">
-    </div>
-    <div id="img2" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild2.jpg" alt="Bild 2 groß">
-    </div>
-    <div id="img3" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild3.jpg" alt="Bild 3 groß">
-    </div>
-    <div id="img4" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild4.jpg" alt="Bild 4 groß">
-    </div>
-    <div id="img5" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild5.jpg" alt="Bild 5 groß">
-    </div>
-    <div id="img6" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild6.jpg" alt="Bild 6 groß">
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="modal" onclick="closeModal()">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="Großansicht">
     </div>
     
     <p>🔥 Jede Nachricht, jedes Anfeuern, jeder Gedanke – ihr seid unser Rückenwind bei diesem Rennen!<br><strong>Robbie & Kike</strong></p>
