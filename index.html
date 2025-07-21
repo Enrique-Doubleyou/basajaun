@@ -118,13 +118,21 @@
 
     <iframe src="https://followmychallenge.com/live/basajaun-teamname" title="Follow My Challenge Livetracking"></iframe>
     
-<!-- Wetter-Widget für Vitoria-Gasteiz: Aktuelles Stundenwetter -->
 <section id="wetter" style="width: 100%; max-width: 700px; margin: 0 auto 2em; text-align: center;">
-  <iframe 
-    src="https://www.wetter.com/wetter_aktuell/wettervorhersage/heute/vitoria-gasteiz/ES0118602.html" 
-    width="100%" height="170" frameborder="0" scrolling="no" style="border:none; border-radius: 8px;" 
-    title="Wetter Vitoria-Gasteiz"></iframe>
+  <a class="weatherwidget-io" href="https://forecast7.com/de/42d86n2d67/vitoria-gasteiz/" data-label_1="VITORIA-GASTEIZ" data-label_2="WETTER" data-theme="original" data-basecolor="#457b9d" data-accent="#1d3557" data-textcolor="#f8f9fa" data-highcolor="#ff6d00" data-lowcolor="#00bfff" data-font="Segoe UI" >VITORIA-GASTEIZ WETTER</a>
 </section>
+
+<script>
+  !function(d,s,id){
+    var js,fjs=d.getElementsByTagName(s)[0];
+    if(!d.getElementById(id)){
+      js=d.createElement(s);
+      js.id=id;
+      js.src='https://weatherwidget.io/js/widget.min.js';
+      fjs.parentNode.insertBefore(js,fjs);
+    }
+  }(document,'script','weatherwidget-io-js');
+</script>
     
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
