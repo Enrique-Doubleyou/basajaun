@@ -114,16 +114,50 @@
       <em>*Long distance&nbsp;&nbsp; *Gravel Cycling&nbsp;&nbsp; *Non-Stop&nbsp;&nbsp; *Unassisted</em>
     </p>
 
+    ### Live-Tracking
+    
     <h2>Live-GPS des Rennens und unseres Teams</h2>
 
     <iframe src="https://followmychallenge.com/live/basajaun-teamname" title="Follow My Challenge Livetracking"></iframe>
-    
+
+    ### Live-Wetter in Vitoria-Gasteiz
+
+    <div class="weather-widget">
+    <div id="openweathermap-widget-11"></div>
+    <script>
+        window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+        window.myWidgetParam.push({
+            id: 11,
+            cityid: '3109314', // City ID for Vitoria-Gasteiz, Spain
+            appid: 'YOUR_OPENWEATHERMAP_API_KEY', // *** IMPORTANT: Replace with your actual OpenWeatherMap API Key ***
+            units: 'metric',
+            containerid: 'openweathermap-widget-11',
+            lang: 'de',
+            widgetType: 'forecast', // You can change this to 'current' for just current weather
+            cnt: 5, // Number of days for forecast, if widgetType is 'forecast'
+            highlightColor: 'rgba(69, 123, 157, 0.7)', // Matches your h2 color slightly
+            borderColor: '#457b9d' // Matches your h2 color
+        });
+        (function() {
+            var script = document.createElement('script');
+            script.async = true;
+            script.charset = "utf-8";
+            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(script, s);
+        })();
+    </script>
+    </div>
+
+    ### Komoot Strecke
     
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
       <iframe src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
     </div>
 
+    ### Bilder Galerie
+    
     <div class="bildergalerie">
       <img src="bild1.jpg" alt="Bild 1" onclick="openModal('bild1.jpg')">
       <img src="bild2.jpg" alt="Bild 2" onclick="openModal('bild2.jpg')">
@@ -138,6 +172,8 @@
       <img id="modalImage" src="" alt="Großansicht">
     </div>
 
+### Gruß Worte
+    
     <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>Robbie & Kike</strong></p>
 
     <div id="counter">
