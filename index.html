@@ -166,28 +166,49 @@
       <img src="bild6.jpg" alt="Bild 6 groß">
     </div>
 
-    <p>Danke, dass ihr dabei seid – wir freuen uns riesig über eure digitale Unterstützung während des gesamten Events!<br><strong>Robbie & Kike</strong></p>
+    <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>Robbie & Kike</strong></p>
 
-    <div id="counter">Seitenaufrufe: <span id="visitorCount">nicht verfügbar</span></div>
-  </main>
+    <div id="counter">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe">
+    </div>
+  </main>
+   
+  <footer>
+    &copy; 2025 Robbie & Kike
+  </footer>
 
-  <footer>
-    &copy; 2025 Robbie & Kike
-  </footer>
+  <script>
+    function openModal(src) {
+      const modal = document.getElementById("lightboxModal");
+      const modalImg = document.getElementById("modalImage");
+      modal.style.display = "block";
+      modalImg.src = src;
+    }
+    function closeModal() {
+      document.getElementById("lightboxModal").style.display = "none";
+      document.getElementById("modalImage").src = "";
+    }
 
-  <!-- Seitenzähler mit Fehlerbehandlung -->
-  <script>
-    fetch("https://api.countapi.xyz/hit/robbie-kike-basajaun/visits")
-      .then(res => {
-        if (!res.ok) throw new Error("Netzwerkfehler");
-        return res.json();
-      })
-      .then(data => {
-        document.getElementById("visitorCount").textContent = data.value;
-      })
-      .catch(() => {
-        document.getElementById("visitorCount").textContent = "nicht verfügbar";
-      });
-  </script>
+    // Adjusted the fetch for the visitor counter as per your existing implementation
+    fetch("https://api.countapi.xyz/hit/robbie-kike-basajaun/visits")
+      .then(res => {
+        if (!res.ok) throw new Error("Netzwerkfehler");
+        return res.json();
+      })
+      .then(data => {
+        // Ensure you have an element with id="visitorCount" if you want to display the count directly
+        // Otherwise, the visitor-badge from laobi.icu already handles the visual display.
+        const visitorCountElement = document.getElementById("visitorCount");
+        if (visitorCountElement) {
+          visitorCountElement.textContent = data.value;
+        }
+      })
+      .catch(() => {
+        const visitorCountElement = document.getElementById("visitorCount");
+        if (visitorCountElement) {
+          visitorCountElement.textContent = "nicht verfügbar";
+        }
+      });
+  </script>
 </body>
 </html>
