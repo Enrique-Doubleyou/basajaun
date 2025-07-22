@@ -32,15 +32,15 @@
       margin: 0.5em 0;
       color: #1d3557;
     }
-    /* Stil für den Link im H1, um die Standard-Linkformatierung aufzuheben */
-    h1 a {
-        text-decoration: none; /* Unterstreichung entfernen */
-        color: inherit; /* Farbe vom Eltern-Element (h1) übernehmen */
-    }
-    h1 a:hover {
-        text-decoration: underline; /* Unterstreichung beim Hover hinzufügen */
-    }
-    
+    /* Stil für den Link im H1, um die Standard-Linkformatierung aufzuheben */
+    h1 a {
+        text-decoration: none; /* Unterstreichung entfernen */
+        color: inherit; /* Farbe vom Eltern-Element (h1) übernehmen */
+    }
+    h1 a:hover {
+        text-decoration: underline; /* Unterstreichung beim Hover hinzufügen */
+    } /* <--- DIESE FEHLENDE KLAMMER WURDE HINZUGEFÜGT */
+    
     h2 {
       font-size: 1.3em;
       margin-bottom: 1em;
@@ -123,12 +123,11 @@
       <em>*Long distance&nbsp;&nbsp; *Gravel Cycling&nbsp;&nbsp; *Non-Stop&nbsp;&nbsp; *Unassisted</em>
     </p>
 
-        
     <h2>Live-GPS des Rennens und unseres Teams</h2>
 
     <iframe src="https://followmychallenge.com/live/basajaun-teamname" title="Follow My Challenge Livetracking"></iframe>
 
-        <div class="weather-widget">
+    <div class="weather-widget">
     <div id="openweathermap-widget-11"></div>
     <script>
         window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
@@ -154,14 +153,12 @@
         })();
     </script>
     </div>
-
-        
+    
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
       <iframe src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
     </div>
-
-        
+    
     <div class="bildergalerie">
       <img src="bild1.jpg" alt="Bild 1" onclick="openModal('bild1.jpg')">
       <img src="bild2.jpg" alt="Bild 2" onclick="openModal('bild2.jpg')">
@@ -176,7 +173,6 @@
       <img id="modalImage" src="" alt="Großansicht">
     </div>
 
-        
     <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>Robbie & Kike</strong></p>
 
     <div id="counter">
