@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transiberica: Basajaun</title>
+  <title>Transiberica: Basajaun 2025</title>
   <style>
     body {
       margin: 0;
@@ -32,13 +32,12 @@
       margin: 0.5em 0;
       color: #1d3557;
     }
-    /* Stil für den Link im H1, um die Standard-Linkformatierung aufzuheben */
     h1 a {
-        text-decoration: none; /* Unterstreichung entfernen */
-        color: inherit; /* Farbe vom Eltern-Element (h1) übernehmen */
+      text-decoration: none;
+      color: inherit;
     }
     h1 a:hover {
-        text-decoration: underline; /* Unterstreichung beim Hover hinzufügen */
+      text-decoration: underline;
     }
     h2 {
       font-size: 1.3em;
@@ -73,6 +72,13 @@
       justify-content: center;
       margin-bottom: 2em;
     }
+    .bildergalerie > div {
+      width: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2em;
+    }
     .bildergalerie img {
       width: 150px;
       height: 100px;
@@ -80,6 +86,10 @@
       border-radius: 4px;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .bildergalerie small {
+      font-size: 0.8em;
+      color: #666;
     }
 
     .lightbox {
@@ -119,104 +129,90 @@
 
   <main>
     <h1><a href="https://www.transiberica.club/basajaun/">Transiberica: Basajaun 2025</a></h1>
-    
+
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
       <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3-5 Tage)&nbsp;&nbsp; *Unassisted</em>
     </p>
-    
+
     <h2>Live-GPS des Rennens und unseres Teams</h2>
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
       <em>unsere Startnummern: 353 & 354</em>
     </p>
 
-    <!-- Livetracking Embed (Platzhalter) -->
     <iframe class="responsive-frame" src="https://followmychallenge.com/live/basajaun25/" title="Follow My Challenge Livetracking"></iframe>
 
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
-      <!-- Komoot Embed Link Beispiel -->
       <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
     </div>
 
-    <!-- Bildergalerie mit Lightbox -->
-    <div class="bildergalerie">
-      <a href="#img1"><img src="bild1.jpg" alt="Bild 1"></a>
-      <a href="#img2"><img src="bild2.jpg" alt="Bild 2"></a>
-      <a href="#img3"><img src="bild3.jpg" alt="Bild 3"></a>
-      <a href="#img4"><img src="bild4.jpg" alt="Bild 4"></a>
-      <a href="#img5"><img src="bild5.jpg" alt="Bild 5"></a>
-      <a href="#img6"><img src="bild6.jpg" alt="Bild 6"></a>
-    </div>
-
-    <!-- Lightbox-Container -->
-    <div id="img1" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild1.jpg" alt="Bild 1 groß">
-    </div>
-    <div id="img2" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild2.jpg" alt="Bild 2 groß">
-    </div>
-    <div id="img3" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild3.jpg" alt="Bild 3 groß">
-    </div>
-    <div id="img4" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild4.jpg" alt="Bild 4 groß">
-    </div>
-    <div id="img5" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild5.jpg" alt="Bild 5 groß">
-    </div>
-    <div id="img6" class="lightbox">
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="bild6.jpg" alt="Bild 6 groß">
-    </div>
+    <!-- Dynamische Bildergalerie -->
+    <div id="bildergalerie" class="bildergalerie"></div>
+    <p id="noImages" style="text-align: center; color: #999; display: none;">
+      Noch keine Event-Bilder verfügbar.
+    </p>
 
     <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
 
-    <div id="counter">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe">
-    </div>
-  </main>
-   
-  <footer>
-    &copy; 2025 Robbie & Kike
-  </footer>
+    <div id="counter">
+      <img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe">
+    </div>
+  </main>
 
-  <script>
-    function openModal(src) {
-      const modal = document.getElementById("lightboxModal");
-      const modalImg = document.getElementById("modalImage");
-      modal.style.display = "block";
-      modalImg.src = src;
-    }
-    function closeModal() {
-      document.getElementById("lightboxModal").style.display = "none";
-      document.getElementById("modalImage").src = "";
-    }
+  <footer>
+    &copy; 2025 Robbie & Kike
+  </footer>
 
-    // Adjusted the fetch for the visitor counter as per your existing implementation
-    fetch("https://api.countapi.xyz/hit/robbie-kike-basajaun/visits")
-      .then(res => {
-        if (!res.ok) throw new Error("Netzwerkfehler");
-        return res.json();
-      })
-      .then(data => {
-        // Ensure you have an element with id="visitorCount" if you want to display the count directly
-        // Otherwise, the visitor-badge from laobi.icu already handles the visual display.
-        const visitorCountElement = document.getElementById("visitorCount");
-        if (visitorCountElement) {
-          visitorCountElement.textContent = data.value;
-        }
-      })
-      .catch(() => {
-        const visitorCountElement = document.getElementById("visitorCount");
-        if (visitorCountElement) {
-          visitorCountElement.textContent = "nicht verfügbar";
-        }
-      });
-  </script>
+  <script>
+    const galerieContainer = document.getElementById("bildergalerie");
+    const noImagesText = document.getElementById("noImages");
+    const bilderListe = Array.from({ length: 20 }, (_, i) => `basajaun${i + 1}.jpg`);
+    let bilderGefunden = 0;
+
+    bilderListe.forEach((imgName, index) => {
+      const img = new Image();
+      img.src = imgName;
+      img.loading = "lazy";
+      img.onload = () => {
+        bilderGefunden++;
+
+        const match = imgName.match(/basajaun\d+[_-]?([\w]+)?\.jpg/i);
+        const beschriftung = match && match[1] ? match[1].replace(/_/g, ' ') : `Bild ${index + 1}`;
+
+        const wrapper = document.createElement("div");
+
+        const link = document.createElement("a");
+        link.href = `#img${index + 1}`;
+
+        const thumbnail = document.createElement("img");
+        thumbnail.src = imgName;
+        thumbnail.alt = beschriftung;
+        thumbnail.loading = "lazy";
+        link.appendChild(thumbnail);
+
+        const caption = document.createElement("small");
+        caption.textContent = beschriftung;
+
+        wrapper.appendChild(link);
+        wrapper.appendChild(caption);
+        galerieContainer.appendChild(wrapper);
+
+        const lightboxDiv = document.createElement("div");
+        lightboxDiv.className = "lightbox";
+        lightboxDiv.id = `img${index + 1}`;
+        lightboxDiv.innerHTML = `
+          <a href="#" class="lightbox-close">&times;</a>
+          <img src="${imgName}" alt="${beschriftung} groß" loading="lazy">
+        `;
+        document.body.appendChild(lightboxDiv);
+      };
+    });
+
+    setTimeout(() => {
+      if (bilderGefunden === 0) {
+        noImagesText.style.display = "block";
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
