@@ -168,74 +168,75 @@
     &copy; 2025 Robbie & Kike
   </footer>
 
-  <script>
-    const galerieContainer = document.getElementById("bildergalerie");
-    const noImagesText = document.getElementById("noImages");
-    const bilderListe = Array.from({ length: 20 }, (_, i) => `basajaun${i + 1}.jpg`);
-    let bilderGefunden = 0;
+<script>
+  const galerieContainer = document.getElementById("bildergalerie");
+  const noImagesText = document.getElementById("noImages");
 
-
-bilderListe.forEach((imgName, index) => {
-  const img = new Image();
-  img.src = "images/" + imgName;  // Hier den Ordner voranstellen
-  img.loading = "lazy";
-  img.onload = () => {
-    bilderGefunden++;
-
-    const match = imgName.match(/basajaun\d+[_-]?([\w]+)?\.jpg/i);
-    const beschriftung = match && match[1] ? match[1].replace(/_/g, ' ') : `Bild ${index + 1}`;
-
-    const wrapper = document.createElement("div");
-
-    const link = document.createElement("a");
-    link.href = `#img${index + 1}`;
-
-    const thumbnail = document.createElement("img");
-    thumbnail.src = "images/" + imgName;  // Und hier ebenfalls
-    thumbnail.alt = beschriftung;
-    thumbnail.loading = "lazy";
-    link.appendChild(thumbnail);
-
-    const caption = document.createElement("small");
-    caption.textContent = beschriftung;
-
-    wrapper.appendChild(link);
-    wrapper.appendChild(caption);
-    galerieContainer.appendChild(wrapper);
-
-    const lightboxDiv = document.createElement("div");
-    lightboxDiv.className = "lightbox";
-    lightboxDiv.id = `img${index + 1}`;
-    lightboxDiv.innerHTML = `
-      <a href="#" class="lightbox-close">&times;</a>
-      <img src="images/${imgName}" alt="${beschriftung} groß" loading="lazy">
-    `;
-    document.body.appendChild(lightboxDiv);
-  };
-});
-    
-
-    setTimeout(() => {
-      if (bilderGefunden === 0) {
+  fetch('bilder.json')
+    .then(response => response.json())
+    .then(data => {
+      const bilder = data.bilder.filter(name => name.toLowerCase().startsWith('basajaun'));
+      if (bilder.length === 0) {
         noImagesText.style.display = "block";
+        return;
       }
-    }, 1000);
-  </script>
 
-  <script>
-    fetch('bilder.json')
-      .then(response => response.json())
-      .then(data => {
+      bilder.forEach((imgName, index) => {
+        // Beschriftung aus Dateinamen extrahieren
+        const beschriftung = imgName
+          .replace(/^basajaun[-_]?/i, '')
+          .replace(/\.[^.]+$/, '')
+          .replace(/[-_]/g, ' ')
+          .trim() || `Bild ${index + 1}`;
+
+        const wrapper = document.createElement("div");
+
+        const link = document.createElement("a");
+        link.href = `#img${index + 1}`;
+
+        const thumbnail = document.createElement("img");
+        thumbnail.src = "images/" + imgName;
+        thumbnail.alt = beschriftung;
+        thumbnail.loading = "lazy";
+        link.appendChild(thumbnail);
+
+        const caption = document.createElement("small");
+        caption.textContent = beschriftung;
+
+        wrapper.appendChild(link);
+        wrapper.appendChild(caption);
+        galerieContainer.appendChild(wrapper);
+
+        // Lightbox erstellen
+        const lightboxDiv = document.createElement("div");
+        lightboxDiv.className = "lightbox";
+        lightboxDiv.id = `img${index + 1}`;
+        lightboxDiv.innerHTML = `
+          <a href="#" class="lightbox-close">&times;</a>
+          <img src="images/${imgName}" alt="${beschriftung} groß" loading="lazy">
+        `;
+        document.body.appendChild(lightboxDiv);
+      });
+
+      // Letzte Aktualisierung anzeigen
+      if (data.updated) {
         const date = new Date(data.updated);
         const formatter = new Intl.DateTimeFormat('de-DE', {
           dateStyle: 'medium',
           timeStyle: 'short'
         });
         document.getElementById('updated-time').textContent = formatter.format(date);
-      })
-      .catch(() => {
+      } else {
         document.getElementById('updated-time').textContent = 'unbekannt';
-      });
-  </script>
+      }
+    })
+    .catch(() => {
+      document.getElementById('updated-time').textContent = 'unbekannt';
+      noImagesText.style.display = "block";
+    });
+</script>
+
+
+  
 </body>
 </html>
