@@ -1,4 +1,4 @@
-name: Generate bilder.json
+name: Bilderliste aktualisieren
 
 on:
   push:
@@ -9,24 +9,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Repository klonen
+        uses: actions/checkout@v4
 
-      - name: Generate bilder.json with timestamp
+      - name: Node.js Umgebung vorbereiten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: JSON-Datei erzeugen
         run: |
-          mkdir -p data
-          echo '{' > data/bilder.json
-          echo '  "last_updated": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",' >> data/bilder.json
-          echo '  "bilder": [' >> data/bilder.json
-          find images -type f \( -iname "*basajaun*" \) | sed 's/^.*images\///;s/$/",/' | sed 's/^/    "/' >> data/bilder.json
-          sed -i '$ s/,$//' data/bilder.json
-          echo '  ]' >> data/bilder.json
-          echo '}' >> data/bilder.json
-          cat data/bilder.json
+          echo "{" > bilder.json
+          echo '  "bilder": [' >> bilder.json
+          find images -type f \( -iname 'basajaun*.jpg' -o -iname 'basajaun*.jpeg' -o -iname 'basajaun*.png' -o -iname 'basajaun*.webp' \) | sed 's|images/||' | sort | sed 's/^/    "/;s/$/",/' >> bilder.json
+          sed -i '$ s/,$//' bilder.json
+          echo '  ],' >> bilder.json
+          echo '  "updated": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"' >> bilder.json
+          echo "}" >> bilder.json
 
-      - name: Commit and Push
+      - name: Änderungen committen
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🔄 Auto-update bilder.json with timestamp"
-          commit_author: GitHub Action <action@github.com>
+          commit_message: 'Bilderliste aktualisiert (Root-Version)'
+          file_pattern: bilder.json
