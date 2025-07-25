@@ -175,7 +175,7 @@
   fetch('bilder.json')
     .then(response => response.json())
     .then(data => {
-      const bilder = data.bilder.filter(name => name.toLowerCase().startsWith('basajaun'));
+      const bilder = data.bilder; // filter(name => name.toLowerCase().startsWith('basajaun'));
       if (bilder.length === 0) {
         noImagesText.style.display = "block";
         return;
