@@ -1,4 +1,4 @@
-name: Bilderliste aktualisieren
+name: Update bilder.json
 
 on:
   push:
@@ -7,30 +7,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  update-json:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Repository klonen
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Node.js Umgebung vorbereiten
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: JSON-Datei erzeugen
-        run: |
-          echo "{" > bilder.json
-          echo '  "bilder": [' >> bilder.json
-          find images -type f \( -iname 'basajaun*.jpg' -o -iname 'basajaun*.jpeg' -o -iname 'basajaun*.png' -o -iname 'basajaun*.webp' \) | sed 's|images/||' | sort | sed 's/^/    "/;s/$/",/' >> bilder.json
-          sed -i '$ s/,$//' bilder.json
-          echo '  ],' >> bilder.json
-          echo '  "updated": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"' >> bilder.json
-          echo "}" >> bilder.json
+      - name: Install dependencies
+        run: npm install
 
-      - name: Änderungen committen
+      - name: Run update script
+        run: node update_bilder.js
+
+      - name: Commit and push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Bilderliste aktualisiert (Root-Version)'
-          file_pattern: bilder.json
+          commit_message: 🔄 Auto-update bilder.json
+          file_pattern: data/bilder.json
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
