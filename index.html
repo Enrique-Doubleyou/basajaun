@@ -174,44 +174,46 @@
     const bilderListe = Array.from({ length: 20 }, (_, i) => `basajaun${i + 1}.jpg`);
     let bilderGefunden = 0;
 
-    bilderListe.forEach((imgName, index) => {
-      const img = new Image();
-      img.src = imgName;
-      img.loading = "lazy";
-      img.onload = () => {
-        bilderGefunden++;
 
-        const match = imgName.match(/basajaun\d+[_-]?([\w]+)?\.jpg/i);
-        const beschriftung = match && match[1] ? match[1].replace(/_/g, ' ') : `Bild ${index + 1}`;
+bilderListe.forEach((imgName, index) => {
+  const img = new Image();
+  img.src = "images/" + imgName;  // Hier den Ordner voranstellen
+  img.loading = "lazy";
+  img.onload = () => {
+    bilderGefunden++;
 
-        const wrapper = document.createElement("div");
+    const match = imgName.match(/basajaun\d+[_-]?([\w]+)?\.jpg/i);
+    const beschriftung = match && match[1] ? match[1].replace(/_/g, ' ') : `Bild ${index + 1}`;
 
-        const link = document.createElement("a");
-        link.href = `#img${index + 1}`;
+    const wrapper = document.createElement("div");
 
-        const thumbnail = document.createElement("img");
-        thumbnail.src = imgName;
-        thumbnail.alt = beschriftung;
-        thumbnail.loading = "lazy";
-        link.appendChild(thumbnail);
+    const link = document.createElement("a");
+    link.href = `#img${index + 1}`;
 
-        const caption = document.createElement("small");
-        caption.textContent = beschriftung;
+    const thumbnail = document.createElement("img");
+    thumbnail.src = "images/" + imgName;  // Und hier ebenfalls
+    thumbnail.alt = beschriftung;
+    thumbnail.loading = "lazy";
+    link.appendChild(thumbnail);
 
-        wrapper.appendChild(link);
-        wrapper.appendChild(caption);
-        galerieContainer.appendChild(wrapper);
+    const caption = document.createElement("small");
+    caption.textContent = beschriftung;
 
-        const lightboxDiv = document.createElement("div");
-        lightboxDiv.className = "lightbox";
-        lightboxDiv.id = `img${index + 1}`;
-        lightboxDiv.innerHTML = `
-          <a href="#" class="lightbox-close">&times;</a>
-          <img src="${imgName}" alt="${beschriftung} groß" loading="lazy">
-        `;
-        document.body.appendChild(lightboxDiv);
-      };
-    });
+    wrapper.appendChild(link);
+    wrapper.appendChild(caption);
+    galerieContainer.appendChild(wrapper);
+
+    const lightboxDiv = document.createElement("div");
+    lightboxDiv.className = "lightbox";
+    lightboxDiv.id = `img${index + 1}`;
+    lightboxDiv.innerHTML = `
+      <a href="#" class="lightbox-close">&times;</a>
+      <img src="images/${imgName}" alt="${beschriftung} groß" loading="lazy">
+    `;
+    document.body.appendChild(lightboxDiv);
+  };
+});
+    
 
     setTimeout(() => {
       if (bilderGefunden === 0) {
