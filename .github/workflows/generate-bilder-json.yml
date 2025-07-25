@@ -12,6 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+- uses: actions/checkout@v3
+
+      - name: Check working directory
+        run: |
+          pwd
+          ls -la
+
+      - name: Run update script
+        run: node update_bilder.js
+        working-directory: .
+
+    
       - uses: actions/checkout@v3
 
       - name: Setup Node.js
