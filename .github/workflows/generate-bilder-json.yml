@@ -1,0 +1,30 @@
+name: Generate bilder.json
+
+on:
+  push:
+    paths:
+      - 'images/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Generate bilder.json
+        run: |
+          mkdir -p data
+          find images -type f \( -iname "*basajaun*" \) > tmp.txt
+          echo "[" > data/bilder.json
+          sed 's/^.*images\///;s/$/",/' tmp.txt | sed 's/^/  "/' >> data/bilder.json
+          sed -i '$ s/,$//' data/bilder.json
+          echo "]" >> data/bilder.json
+          cat data/bilder.json
+
+      - name: Commit and Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🔄 Auto-update bilder.json"
+          
