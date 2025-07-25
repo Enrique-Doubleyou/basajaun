@@ -1,28 +1,22 @@
-const fs = require("fs");
-const path = require("path");
+// update_bilder.js
+const fs = require('fs');
+const path = require('path');
 
-// Ordner mit den Bildern
-const imagesDir = path.join(__dirname, "images");
-const outputFile = path.join(__dirname, "data", "bilder.json");
+const imageDir = path.join(__dirname, 'images');
+const outputFile = path.join(__dirname, 'data', 'bilder.json');
 
-if (!fs.existsSync(imagesDir)) {
-  console.error("Ordner 'images/' wurde nicht gefunden.");
-  process.exit(1);
-}
+fs.readdir(imageDir, (err, files) => {
+  if (err) throw err;
 
-// Nur Dateien, die mit "basajaun" beginnen
-const files = fs.readdirSync(imagesDir)
-  .filter(file => /^basajaun/i.test(file));
+  const bilder = files
+    .filter(file => /^basajaun.*\.(jpe?g|png|gif)$/i.test(file))
+    .sort();
 
-if (!fs.existsSync(path.dirname(outputFile))) {
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-}
+  const jsonData = {
+    bilder,
+    updated: new Date().toISOString()
+  };
 
-const data = {
-  bilder: files.sort(),
-  updated: new Date().toISOString()
-};
-
-fs.writeFileSync(outputFile, JSON.stringify(data, null, 2), "utf8");
-
-console.log(`✅ ${files.length} Bilder gefunden. Datei 'data/bilder.json' wurde aktualisiert.`);
+  fs.writeFileSync(outputFile, JSON.stringify(jsonData, null, 2), 'utf-8');
+  console.log(`✅ ${bilder.length} Bilder gespeichert in ${outputFile}`);
+});
