@@ -1,4 +1,4 @@
-name: Update bilder.json
+name: Auto-Update bilder.json
 
 on:
   push:
@@ -7,23 +7,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-json:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run update script
+      - name: Create bilder.json
         run: node update_bilder.js
 
       - name: Commit and push
