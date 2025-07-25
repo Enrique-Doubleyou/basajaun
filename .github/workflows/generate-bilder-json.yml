@@ -13,18 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Generate bilder.json
+      - name: Generate bilder.json with timestamp
         run: |
           mkdir -p data
-          find images -type f \( -iname "*basajaun*" \) > tmp.txt
-          echo "[" > data/bilder.json
-          sed 's/^.*images\///;s/$/",/' tmp.txt | sed 's/^/  "/' >> data/bilder.json
+          echo '{' > data/bilder.json
+          echo '  "last_updated": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",' >> data/bilder.json
+          echo '  "bilder": [' >> data/bilder.json
+          find images -type f \( -iname "*basajaun*" \) | sed 's/^.*images\///;s/$/",/' | sed 's/^/    "/' >> data/bilder.json
           sed -i '$ s/,$//' data/bilder.json
-          echo "]" >> data/bilder.json
+          echo '  ]' >> data/bilder.json
+          echo '}' >> data/bilder.json
           cat data/bilder.json
 
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🔄 Auto-update bilder.json"
-          
+          commit_message: "🔄 Auto-update bilder.json with timestamp"
+          commit_author: GitHub Action <action@github.com>
