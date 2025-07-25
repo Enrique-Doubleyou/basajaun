@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -91,7 +92,6 @@
       font-size: 0.8em;
       color: #666;
     }
-
     .lightbox {
       display: none;
       position: fixed;
@@ -120,99 +120,101 @@
       font-size: 2em;
       text-decoration: none;
     }
+
+    .upload-box {
+      margin: 2em auto;
+      padding: 1em;
+      border: 2px dashed #ccc;
+      background: #fff;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .upload-box input[type="file"] {
+      margin-bottom: 1em;
+    }
   </style>
 </head>
 <body>
   <header>
     <img src="banner.jpg" alt="Bannerfoto Basajaun">
   </header>
-
   <main>
     <h1><a href="https://www.transiberica.club/basajaun/">Transiberica: Basajaun 2025</a></h1>
-
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
-      <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3-5 Tage)&nbsp;&nbsp; *Unassisted</em>
-    </p>
-
+      <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3-5 Tage)&nbsp;&nbsp; *Unassisted</em>
+    </p>
     <h2>Live-GPS des Rennens und unseres Teams</h2>
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
-      <em>unsere Startnummern: 353 & 354</em>
-    </p>
-
+      <em>unsere Startnummern: 353 & 354</em>
+    </p>
     <iframe class="responsive-frame" src="https://followmychallenge.com/live/basajaun25/" title="Follow My Challenge Livetracking"></iframe>
 
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
-      <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
+      <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso" title="Komoot Basajaun Route"></iframe>
     </div>
 
-    <!-- Dynamische Bildergalerie -->
+    <h2>📸 Bildergalerie & Upload</h2>
+    <div class="upload-box">
+      <p><strong>Eigene Fotos hochladen?</strong></p>
+      <p>Ziehe sie hier rein oder wähle sie aus.</p>
+      <input type="file" multiple>
+      <p><em>→ Ziehe die Bilder später in deinen GitHub Fork oder sende uns eine Nachricht</em></p>
+    </div>
+
     <div id="bildergalerie" class="bildergalerie"></div>
-    <p id="noImages" style="text-align: center; color: #999; display: none;">
-      Noch keine Event-Bilder verfügbar.
-    </p>
+    <p id="noImages" style="text-align: center; color: #999; display: none;">Noch keine Event-Bilder verfügbar.</p>
+    <p id="timestamp" style="font-size: 0.8em; color: #666;"></p>
 
-    <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
-
-    <div id="counter">
-      <img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe">
-    </div>
+    <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
+    <div id="counter"><img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe"></div>
   </main>
-
-  <footer>
-    &copy; 2025 Robbie & Kike
-  </footer>
+  <footer>&copy; 2025 Robbie & Kike</footer>
 
   <script>
     const galerieContainer = document.getElementById("bildergalerie");
     const noImagesText = document.getElementById("noImages");
-    const bilderListe = Array.from({ length: 20 }, (_, i) => `basajaun${i + 1}.jpg`);
-    let bilderGefunden = 0;
+    const timestamp = document.getElementById("timestamp");
 
-    bilderListe.forEach((imgName, index) => {
-      const img = new Image();
-      img.src = imgName;
-      img.loading = "lazy";
-      img.onload = () => {
-        bilderGefunden++;
+    async function ladeBilder() {
+      try {
+        const res = await fetch("bilder.json");
+        const data = await res.json();
+        if (data && data.bilder && data.bilder.length > 0) {
+          data.bilder.forEach((imgName, index) => {
+            const wrapper = document.createElement("div");
+            const link = document.createElement("a");
+            link.href = `#img${index + 1}`;
+            const thumbnail = document.createElement("img");
+            thumbnail.src = "images/" + imgName;
+            thumbnail.alt = imgName;
+            link.appendChild(thumbnail);
+            const caption = document.createElement("small");
+            caption.textContent = imgName.replace(/\.[^/.]+$/, "");
+            wrapper.appendChild(link);
+            wrapper.appendChild(caption);
+            galerieContainer.appendChild(wrapper);
 
-        const match = imgName.match(/basajaun\d+[_-]?([\w]+)?\.jpg/i);
-        const beschriftung = match && match[1] ? match[1].replace(/_/g, ' ') : `Bild ${index + 1}`;
-
-        const wrapper = document.createElement("div");
-
-        const link = document.createElement("a");
-        link.href = `#img${index + 1}`;
-
-        const thumbnail = document.createElement("img");
-        thumbnail.src = imgName;
-        thumbnail.alt = beschriftung;
-        thumbnail.loading = "lazy";
-        link.appendChild(thumbnail);
-
-        const caption = document.createElement("small");
-        caption.textContent = beschriftung;
-
-        wrapper.appendChild(link);
-        wrapper.appendChild(caption);
-        galerieContainer.appendChild(wrapper);
-
-        const lightboxDiv = document.createElement("div");
-        lightboxDiv.className = "lightbox";
-        lightboxDiv.id = `img${index + 1}`;
-        lightboxDiv.innerHTML = `
-          <a href="#" class="lightbox-close">&times;</a>
-          <img src="${imgName}" alt="${beschriftung} groß" loading="lazy">
-        `;
-        document.body.appendChild(lightboxDiv);
-      };
-    });
-
-    setTimeout(() => {
-      if (bilderGefunden === 0) {
+            const lightboxDiv = document.createElement("div");
+            lightboxDiv.className = "lightbox";
+            lightboxDiv.id = `img${index + 1}`;
+            lightboxDiv.innerHTML = `
+              <a href="#" class="lightbox-close">&times;</a>
+              <img src="images/${imgName}" alt="${imgName} groß">
+            `;
+            document.body.appendChild(lightboxDiv);
+          });
+          timestamp.textContent = "Letzte Aktualisierung: " + new Date(data.timestamp).toLocaleString("de-DE");
+        } else {
+          noImagesText.style.display = "block";
+        }
+      } catch (e) {
         noImagesText.style.display = "block";
       }
-    }, 1000);
+    }
+
+    ladeBilder();
   </script>
 </body>
 </html>
