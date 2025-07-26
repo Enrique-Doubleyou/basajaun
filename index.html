@@ -159,7 +159,7 @@
 
       // 3. Bilder verarbeiten
       if (data.bilder && data.bilder.length > 0) {
-        data.bilder.slice(0, 20).forEach((imgName, index) => {
+        data.bilder.slice(0, 30).forEach((imgName, index) => {
           const wrapper = document.createElement("div");
           const link = document.createElement("a");
           link.href = `#img${index + 1}`;
