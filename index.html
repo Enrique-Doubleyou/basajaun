@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Transiberica: Basajaun 2025</title>
   <style>
     body {
@@ -64,7 +64,6 @@
       font-size: 0.9em;
       margin-top: 1em;
     }
-
     .bildergalerie {
       display: flex;
       flex-wrap: wrap;
@@ -74,10 +73,6 @@
     }
     .bildergalerie > div {
       width: 150px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2em;
     }
     .bildergalerie img {
       width: 150px;
@@ -87,11 +82,6 @@
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    .bildergalerie small {
-      font-size: 0.8em;
-      color: #666;
-    }
-
     .lightbox {
       display: none;
       position: fixed;
@@ -126,114 +116,73 @@
   <header>
     <img src="banner.jpg" alt="Bannerfoto Basajaun">
   </header>
-
   <main>
     <h1><a href="https://www.transiberica.club/basajaun/">Transiberica: Basajaun 2025</a></h1>
-
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
-      <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3-5 Tage)&nbsp;&nbsp; *Unassisted</em>
-    </p>
-
+      <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3–5 Tage)&nbsp;&nbsp; *Unassisted</em>
+    </p>
     <h2>Live-GPS des Rennens und unseres Teams</h2>
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
-      <em>unsere Startnummern: 353 & 354</em>
-    </p>
-
+      <em>unsere Startnummern: 353 & 354</em>
+    </p>
     <iframe class="responsive-frame" src="https://followmychallenge.com/live/basajaun25/" title="Follow My Challenge Livetracking"></iframe>
 
     <div class="komoot">
       <h2>Die gesamte Strecke auf komoot</h2>
-      <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
+      <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso" title="Komoot Basajaun Route"></iframe>
     </div>
 
-    <!-- Dynamische Bildergalerie -->
+    <h2>📸 Bildergalerie</h2>
     <div id="bildergalerie" class="bildergalerie"></div>
-    <p id="noImages" style="text-align: center; color: #999; display: none;">
-      Noch keine Event-Bilder verfügbar.
-    </p>
+    <p id="noImages" style="text-align: center; color: #999; display: none;">Noch keine Event-Bilder verfügbar.</p>
+    <p id="timestamp" style="font-size: 0.8em; color: #666;"></p>
 
-    <!-- Timestamp -->
-    <p id="timestamp" style="font-size: 0.8em; color: #888; margin-top: 2em;">
-      Letzte Aktualisierung: <span id="updated-time">lädt…</span>
-    </p>
-
-    <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind bei diesem Event!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
-
-    <div id="counter">
-      <img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe">
-    </div>
+    <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
+    <div id="counter"><img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe"></div>
   </main>
+  <footer>&copy; 2025 Robbie & Kike</footer>
 
-  <footer>
-    &copy; 2025 Robbie & Kike
-  </footer>
+  <script>
+    const galerieContainer = document.getElementById("bildergalerie");
+    const noImagesText = document.getElementById("noImages");
+    const timestamp = document.getElementById("timestamp");
 
-<script>
-  const galerieContainer = document.getElementById("bildergalerie");
-  const noImagesText = document.getElementById("noImages");
+    async function ladeBilder() {
+      try {
+        const res = await fetch("bilder.json");
+        const data = await res.json();
+        if (data.bilder && data.bilder.length > 0) {
+          data.bilder.slice(0, 20).forEach((imgName, index) => {
+            const wrapper = document.createElement("div");
+            const link = document.createElement("a");
+            link.href = `#img${index + 1}`;
+            const thumbnail = document.createElement("img");
+            thumbnail.src = "images/" + imgName;
+            thumbnail.alt = "";
+            link.appendChild(thumbnail);
+            wrapper.appendChild(link);
+            galerieContainer.appendChild(wrapper);
 
-  fetch('bilder.json')
-    .then(response => response.json())
-    .then(data => {
-      const bilder = data.bilder; // filter(name => name.toLowerCase().startsWith('basajaun'));
-      if (bilder.length === 0) {
+            const lightboxDiv = document.createElement("div");
+            lightboxDiv.className = "lightbox";
+            lightboxDiv.id = `img${index + 1}`;
+            lightboxDiv.innerHTML = `
+              <a href="#" class="lightbox-close">&times;</a>
+              <img src="images/${imgName}" alt="Großansicht">
+            `;
+            document.body.appendChild(lightboxDiv);
+          });
+          timestamp.textContent = "Letzte Aktualisierung: " + new Date(data.timestamp).toLocaleString("de-DE");
+        } else {
+          noImagesText.style.display = "block";
+        }
+      } catch (e) {
+        console.error("Fehler beim Laden der Bilder:", e);
         noImagesText.style.display = "block";
-        return;
       }
+    }
 
-      bilder.forEach((imgName, index) => {
-        // Beschriftung aus Dateinamen extrahieren
-        const beschriftung = imgName
-          .replace(/^basajaun[-_]?/i, '')
-          .replace(/\.[^.]+$/, '')
-          .replace(/[-_]/g, ' ')
-          .trim() || `Bild ${index + 1}`;
-
-        const wrapper = document.createElement("div");
-
-        const link = document.createElement("a");
-        link.href = `#img${index + 1}`;
-
-        const thumbnail = document.createElement("img");
-        thumbnail.src = "images/" + imgName;
-        thumbnail.alt = beschriftung;
-        thumbnail.loading = "lazy";
-        link.appendChild(thumbnail);
-
-        const caption = document.createElement("small");
-        caption.textContent = beschriftung;
-
-        wrapper.appendChild(link);
-        wrapper.appendChild(caption);
-        galerieContainer.appendChild(wrapper);
-
-        // Lightbox erstellen
-        const lightboxDiv = document.createElement("div");
-        lightboxDiv.className = "lightbox";
-        lightboxDiv.id = `img${index + 1}`;
-        lightboxDiv.innerHTML = `
-          <a href="#" class="lightbox-close">&times;</a>
-          <img src="images/${imgName}" alt="${beschriftung} groß" loading="lazy">
-        `;
-        document.body.appendChild(lightboxDiv);
-      });
-
-      // Letzte Aktualisierung anzeigen
-      if (data.updated) {
-        const date = new Date(data.updated);
-        const formatter = new Intl.DateTimeFormat('de-DE', {
-          dateStyle: 'medium',
-          timeStyle: 'short'
-        });
-        document.getElementById('updated-time').textContent = formatter.format(date);
-      } else {
-        document.getElementById('updated-time').textContent = 'unbekannt';
-      }
-    })
-    .catch(() => {
-      document.getElementById('updated-time').textContent = 'unbekannt';
-      noImagesText.style.display = "block";
-    });
-</script>
+    ladeBilder();
+  </script>
 </body>
 </html>
