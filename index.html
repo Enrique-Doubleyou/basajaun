@@ -142,47 +142,57 @@
   </main>
   <footer>&copy; 2025 Robbie & Kike</footer>
 
-  <script>
-    const galerieContainer = document.getElementById("bildergalerie");
-    const noImagesText = document.getElementById("noImages");
-    const timestamp = document.getElementById("timestamp");
+<script>
+  const galerieContainer = document.getElementById("bildergalerie");
+  const noImagesText = document.getElementById("noImages");
+  const timestamp = document.getElementById("timestamp");
 
-    async function ladeBilder() {
-      try {
-        const res = await fetch("bilder.json");
-        const data = await res.json();
-        if (data.bilder && data.bilder.length > 0) {
-          data.bilder.slice(0, 20).forEach((imgName, index) => {
-            const wrapper = document.createElement("div");
-            const link = document.createElement("a");
-            link.href = `#img${index + 1}`;
-            const thumbnail = document.createElement("img");
-            thumbnail.src = "images/" + imgName;
-            thumbnail.alt = "";
-            link.appendChild(thumbnail);
-            wrapper.appendChild(link);
-            galerieContainer.appendChild(wrapper);
+  async function ladeBilder() {
+    try {
+      // 1. JSON mit Cachebuster laden
+      const res = await fetch(`bilder.json?t=${Date.now()}`);
+      const data = await res.json();
 
-            const lightboxDiv = document.createElement("div");
-            lightboxDiv.className = "lightbox";
-            lightboxDiv.id = `img${index + 1}`;
-            lightboxDiv.innerHTML = `
-              <a href="#" class="lightbox-close">&times;</a>
-              <img src="images/${imgName}" alt="Großansicht">
-            `;
-            document.body.appendChild(lightboxDiv);
-          });
-          timestamp.textContent = "Letzte Aktualisierung: " + new Date(data.timestamp).toLocaleString("de-DE");
-        } else {
-          noImagesText.style.display = "block";
-        }
-      } catch (e) {
-        console.error("Fehler beim Laden der Bilder:", e);
+      // 2. Versionsnummer speichern (für Bild-URLs)
+      const version = data.version || "v1";
+      sessionStorage.setItem("bilderVersion", version);
+
+      // 3. Bilder verarbeiten
+      if (data.bilder && data.bilder.length > 0) {
+        data.bilder.slice(0, 20).forEach((imgName, index) => {
+          const wrapper = document.createElement("div");
+          const link = document.createElement("a");
+          link.href = `#img${index + 1}`;
+
+          const thumbnail = document.createElement("img");
+          thumbnail.src = `images/${imgName}?v=${version}`;
+          thumbnail.alt = "";
+          link.appendChild(thumbnail);
+          wrapper.appendChild(link);
+          galerieContainer.appendChild(wrapper);
+
+          const lightboxDiv = document.createElement("div");
+          lightboxDiv.className = "lightbox";
+          lightboxDiv.id = `img${index + 1}`;
+          lightboxDiv.innerHTML = `
+            <a href="#" class="lightbox-close">&times;</a>
+            <img src="images/${imgName}?v=${version}" alt="Großansicht">
+          `;
+          document.body.appendChild(lightboxDiv);
+        });
+
+        // 4. Zeit anzeigen
+        timestamp.textContent = "Letzte Aktualisierung: " + new Date(data.timestamp).toLocaleString("de-DE");
+      } else {
         noImagesText.style.display = "block";
       }
+    } catch (e) {
+      console.error("Fehler beim Laden der Bilder:", e);
+      noImagesText.style.display = "block";
     }
+  }
 
-    ladeBilder();
-  </script>
+  ladeBilder();
+</script>
 </body>
 </html>
