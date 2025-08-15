@@ -110,14 +110,60 @@
       font-size: 2em;
       text-decoration: none;
     }
-  </style>
+  
+  /* === Abschluss & Ressourcen (scoped, light theme) === */
+  .abschluss{--bg:#ffffff;--fg:#212529;--muted:#6c757d;--acc:#1d3557;--bd:#e9ecef;--chip:#f8f9fa}
+  .abschluss{margin:2rem auto;padding:1.25rem;border:1px solid var(--bd);border-radius:16px;background:var(--bg);max-width:700px}
+  .abschluss *{box-sizing:border-box;color:var(--fg)}
+  .abschluss h2{margin:.2rem 0 1rem;font-size:1.4rem;color:var(--acc)}
+  .abschluss h3{margin:1rem 0 .5rem;font-size:1.05rem;color:var(--muted)}
+  .badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;margin:0 0 .5rem;padding:0;list-style:none}
+  .badges li{background:var(--chip);border:1px solid var(--bd);padding:.6rem .7rem;border-radius:12px;display:flex;flex-direction:column;gap:.15rem}
+  .badges span{font-size:.76rem;color:var(--muted)}
+  .badges strong{font-size:1.05rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}
+  .card{border:1px solid var(--bd);background:var(--chip);border-radius:12px;padding:.7rem}
+  .list{margin:.3rem 0 0;padding-left:1.1rem;text-align:left}
+  .list li{margin:.2rem 0}
+  .meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+  .chip{font-size:.75rem;padding:.2rem .45rem;border:1px solid var(--bd);border-radius:999px;background:#fff;color:var(--muted)}
+  .downloads{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem;margin-top:.6rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--bd);background:#fff;text-decoration:none}
+  .btn:hover{transform:translateY(-1px)}
+  .btn svg{width:18px;height:18px}
+  details.ab{border:1px solid var(--bd);border-radius:12px;background:var(--chip);padding:.6rem .8rem;margin-top:.5rem;text-align:left}
+  details.ab summary{cursor:pointer;font-weight:600;list-style:none}
+  details.ab summary::-webkit-details-marker{display:none}
+  .footer-minor{margin-top:.7rem;padding-top:.6rem;border-top:1px dashed var(--bd);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between}
+  @media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s ease}}
+
+
+  
+/* === TOC FAB (Floating "Zum Fazit") === */
+  .toc-fab{position:fixed;right:max(12px, env(safe-area-inset-right));top:max(12px, env(safe-area-inset-top));z-index:9999;
+    display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .7rem;border-radius:999px;border:1px solid #e9ecef;
+    background:#ffffff;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.12);font-weight:600}
+  .toc-fab:hover{transform:translateY(-1px)}
+  .toc-fab:focus{outline:2px solid #1d3557;outline-offset:2px}
+  @media (prefers-reduced-motion:no-preference){.toc-fab{transition:transform .15s ease, box-shadow .15s ease}}
+  @media (max-width:480px){.toc-fab span{display:none}}
+  @media (prefers-color-scheme:dark){
+    .toc-fab{background:#11161b;border-color:#2a2e33;color:#e8ecef;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  }
+/*===util===*/html{scroll-behavior:smooth}/*===abschluss-auto-theme===*/.abschluss{--bg:#ffffff;--fg:#212529;--muted:#6c757d;--acc:#1d3557;--bd:#e9ecef;--chip:#f8f9fa;--ok:#00b37a;--warn:#ffb020;--err:#ff5a5f;scroll-margin-top:80px}@media(prefers-color-scheme:dark){.abschluss{--bg:#0b0d10;--fg:#e8ecef;--muted:#9aa4ad;--acc:#3aa0ff;--bd:#24303a;--chip:#12171c}}
+/*===fab-top===*/.totop-fab{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:9999;display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .7rem;border-radius:999px;border:1px solid #e9ecef;background:#ffffff;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.12);font-weight:600}.totop-fab:hover{transform:translateY(-1px)}.totop-fab:focus{outline:2px solid #1d3557;outline-offset:2px}@media(prefers-color-scheme:dark){.totop-fab{background:#11161b;border-color:#2a2e33;color:#e8ecef;box-shadow:0 6px 20px rgba(0,0,0,.5)}}
+</style>
 </head>
 <body>
+<div id=\"top\" aria-hidden=\"true\"></div>
+
+<a class="toc-fab" href="#abschluss" aria-label="Zum Fazit springen" title="Zum Fazit">↘ <span>Zum&nbsp;Fazit</span></a>
+
   <header>
     <img src="banner.jpg" alt="Bannerfoto Basajaun">
   </header>
-  <main>
-    <h1><a href="https://www.transiberica.club/basajaun/">Transiberica: Basajaun 2025</a></h1>
+  \1
+<h1><a href="https://www.transiberica.club/basajaun/">Transiberica: Basajaun 2025</a></h1>
     <p style="font-size: 0.95em; color: #555; margin-bottom: 1em;">
       <em>*Long distance (~868 km)&nbsp;&nbsp; *Gravel Cycling (~15670 hm)&nbsp;&nbsp; *Non-Stop (~3–5 Tage)&nbsp;&nbsp; *Unassisted</em>
     </p>
@@ -139,7 +185,89 @@
 
     <p>🔥 Jeder digitale Gruß, jede Message – ihr seid unser Rückenwind!<br><strong>🚴 Robbie & Kike 🚴</strong></p>
     <div id="counter"><img src="https://visitor-badge.laobi.icu/badge?page_id=enrique-doubleyou.basajaun" alt="Seitenaufrufe"></div>
-  </main>
+  <section class="abschluss" id="abschluss">
+  <h2>Basajaun — Fazit & Ressourcen</h2>
+  <div>
+    <h3>TL;DR</h3>
+    <ul class="badges">
+      <li><span>Distanz</span><strong>867&nbsp;km</strong></li>
+      <li><span>Höhenmeter</span><strong>16&nbsp;822&nbsp;m</strong></li>
+      <li><span>Bewegungszeit</span><strong>3&nbsp;d&nbsp;1&nbsp;h</strong></li>
+      <li><span>Pausenzeit</span><strong>1&nbsp;d&nbsp;23&nbsp;h</strong></li>
+      <li><span>Ø-Leistung</span><strong>NP&nbsp;≈&nbsp;180–200&nbsp;W</strong></li>
+      <li><span>Kalorienverbrauch</span><strong>21&nbsp;537&nbsp;kcal</strong></li>
+    </ul>
+  </div>
+  <details class="ab" open>
+    <summary>Lessons Learned (kurz)</summary>
+    <ul class="list">
+      <li>Abfahrts-Limits realistisch: Asphalt&nbsp;≤&nbsp;50–60&nbsp;km/h; Gravel&nbsp;≤&nbsp;35&nbsp;km/h; Dirt&nbsp;≤&nbsp;30&nbsp;km/h; Sand&nbsp;≤&nbsp;20&nbsp;km/h; technisch ggf. darunter.</li>
+      <li>Reifenwahl <em>Tufo Thundero</em> war auf Sand klar im Vorteil; bleibt gesetzt für Badlands.</li>
+      <li>Tannus Armour Tubeless: spürbarer Pannenschutz, ohne merkliche Renn-Nachteile.</li>
+      <li>Schlaf: Powernaps ok; Zimmer nach ~48&nbsp;h erhöht Netto-Tempo.</li>
+    </ul>
+  </details>
+  <details class="ab">
+    <summary>Setup (Bike &amp; Ausrüstung)</summary>
+    <div class="grid" role="list">
+      <div class="card" role="listitem">
+        <strong>Bike</strong>
+        <p style="margin:.2rem 0;color:#6c757d">Canyon Inflite CF SLX Race 9 (2020)</p>
+        <ul class="list">
+          <li>Laufräder: Carl-Z Z45i21SL · DT240 EXP · 24/24</li>
+          <li>Reifen: Tufo Thundero 40–48&nbsp;mm</li>
+          <li>Inserts: Tannus Armour Tubeless</li>
+        </ul>
+      </div>
+      <div class="card" role="listitem">
+        <strong>Cockpit</strong>
+        <ul class="list">
+          <li>Headunit: Garmin Edge 830</li>
+          <li>Frontlicht + ggf. DJI Osmo 360</li>
+          <li>Foodpouches: 2× isoliert, verschließbar</li>
+        </ul>
+      </div>
+      <div class="card" role="listitem">
+        <strong>Storage</strong>
+        <ul class="list">
+          <li>Apidura Top Tube (0,9&nbsp;l) – Powerbank &amp; Handy</li>
+          <li>Apidura Race Frame (2,4&nbsp;l) – Tooling &amp; Kleidung</li>
+          <li>Ortlieb Sattel (1,5&nbsp;l) – SOL Bivvy</li>
+        </ul>
+      </div>
+      <div class="card" role="listitem">
+        <strong>Hydration</strong>
+        <ul class="list">
+          <li>Flaschen: 0,75&nbsp;l + 0,6&nbsp;l isoliert</li>
+          <li>Backpack: Cyclite Race 7&nbsp;l · Blase 3&nbsp;l</li>
+        </ul>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">Bike ~18,6&nbsp;kg (ohne Wasser)</span>
+      <span class="chip">Ziel Badlands: ≤&nbsp;13&nbsp;kg</span>
+    </div>
+  </details>
+  <details class="ab">
+    <summary>Ernährung &amp; Hydration (Kurzüberblick)</summary>
+    <ul class="list">
+      <li>Zielzufuhr: 18&nbsp;000–21&nbsp;000&nbsp;kcal (Real-Food Fokus).</li>
+      <li>Unterwegs: Brot, Käse, Joghurt, Sandwiches · Mitführen: Gels, Müsliriegel, Eiweißriegel, Isotabs.</li>
+      <li>Wasser: 2–4,5&nbsp;l je nach Abschnitt &amp; Hitze.</li>
+    </ul>
+  </details>
+  <details class="ab">
+    <summary>Downloads</summary>
+    <div class="downloads">
+      <a class="btn" href="marschtabelle.pdf" download>Marschtabelle (PDF)</a>
+      <a class="btn" href="etappenplan.csv" download>Etappenplan (CSV)</a>
+    </div>
+  </details>
+  <div class="footer-minor">
+    <div style="color:#6c757d">Fragen, Daten oder GPX? → <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></div>
+  </div>
+</section>
+</main>
   <footer>&copy; 2025 Robbie & Kike</footer>
 
 <script>
@@ -194,5 +322,7 @@
 
   ladeBilder();
 </script>
+
+<a class="totop-fab" href="#top" aria-label="Nach oben">↑ <span>Nach&nbsp;oben</span></a>
 </body>
 </html>
