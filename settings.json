@@ -1,0 +1,14 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "bilder.json",
+        "Bilder.json",
+        "data/bilder.json",
+        "assets/bilder.json",
+        "public/bilder.json"
+      ],
+      "url": "./bilder.schema.json"
+    }
+  ]
+}

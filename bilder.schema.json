@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/bilder.schema.json",
+  "title": "Basajaun Site – Bilder",
+  "description": "Array von Bild-Datensätzen für die Galerie.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/image"
+  },
+  "$defs": {
+    "image": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "src": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pfad/URL zur Bilddatei (relativ oder absolut)."
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Alternativtext (empfohlen)."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optionaler Titel/Tooltip."
+        },
+        "caption": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Kurze Bildunterschrift/Ort/Zeit."
+        },
+        "w": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Natürliche Breite in Pixeln (empfohlen für CLS)."
+        },
+        "h": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Natürliche Höhe in Pixeln (empfohlen für CLS)."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Freie Schlagworte/Filter."
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Aufnahmedatum YYYY-MM-DD."
+        },
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "GPS Latitude."
+        },
+        "lon": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "GPS Longitude."
+        }
+      },
+      "required": [
+        "src"
+      ]
+    }
+  },
+  "examples": [
+    [
+      {
+        "src": "assets/img/basajaun_01.jpg",
+        "alt": "Anstieg auf Schotterpiste kurz vor CP1",
+        "w": 2048,
+        "h": 1365,
+        "tags": [
+          "gravel",
+          "sunset"
+        ],
+        "date": "2025-08-01",
+        "lat": 42.88,
+        "lon": -2.67
+      }
+    ]
+  ]
+}

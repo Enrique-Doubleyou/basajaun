@@ -1,0 +1,29 @@
+name: Lint bilder.json
+
+on:
+  push:
+    paths:
+      - 'bilder.json'
+      - 'Bilder.json'
+      - 'data/bilder.json'
+      - 'assets/bilder.json'
+      - 'public/bilder.json'
+      - 'scripts/lint-bilder.mjs'
+      - '.github/workflows/lint-bilder.yml'
+  pull_request:
+    paths:
+      - '**/bilder.json'
+      - 'scripts/lint-bilder.mjs'
+      - '.github/workflows/lint-bilder.yml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Lint bilder.json
+        run: node scripts/lint-bilder.mjs
