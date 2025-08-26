@@ -1,0 +1,140 @@
+/* === Basajaun → Badlands Look (drop‑in) ==============================
+   - Keine Änderungen am Upload/JS.
+   - Nur Stil/Lesbarkeit/Darkmode/Responsive.
+   - Binde diese Datei NACH deinen bestehenden Styles ein.
+========================================================================== */
+
+/* Base Colors + Desert Gradient */
+:root{
+  --fg:#212529; --muted:#5f6b74; --sea:#2b6777; --bd:#e9ecef; --chip:#f8f9fa;
+  --sand:#f3e6cf; --dune:#ead9bd;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --fg:#e8ecef; --muted:#b4bec7; --sea:#3aa0ff; --bd:#2a2e33; --chip:#11161b;
+    --sand:#2b241d; --dune:#342b23;
+  }
+}
+html{ scroll-behavior:smooth }
+body{
+  margin:0; color:var(--fg);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  background:linear-gradient(180deg, var(--sand) 0%, var(--dune) 55%, #eff6f8 100%);
+}
+@media (prefers-color-scheme:dark){
+  body{ background:linear-gradient(180deg, var(--sand) 0%, var(--dune) 60%, #141a1f 100%); }
+}
+a{ color:var(--sea); text-decoration:none }
+a:hover{ text-decoration:underline }
+
+/* Layout container (greift, egal wie der Wrapper heißt) */
+main, .container, .page, .wrap, .inner, body > div:not([class]){
+  max-width:760px; margin:0 auto; padding:1rem; box-sizing:border-box;
+}
+
+/* Headings */
+h1{ font-size:2rem; margin:.6rem 0; color:#1d3557 }
+h2{ font-size:1.3rem; margin:1.25rem 0 .75rem; color:#457b9d; text-align:center }
+@media (prefers-color-scheme:dark){ h1, h2{ color:#3aa0ff } }
+
+/* “Link-Card” Effekt für verlinkte Überschriften (falls h1/h2 > a existiert) */
+.link-card{
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.35rem .6rem; border-radius:10px; border:1px solid var(--bd);
+  background:#ffffffcc; text-decoration:none; font-weight:600;
+  transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.link-card:hover, .link-card:focus-visible{
+  border-color:var(--sea);
+  box-shadow:0 6px 22px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.12);
+  transform:translateY(-1px) scale(1.01);
+}
+@media (prefers-color-scheme:dark){
+  .link-card{ background:#11161bcc; border-color:#2a2e33; color:var(--fg) }
+  .link-card:hover, .link-card:focus-visible{
+    border-color:#3aa0ff;
+    box-shadow:0 10px 28px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.35);
+  }
+}
+
+/* Iframes (Livetracking/Komoot) */
+iframe{ width:100%; aspect-ratio:16/9; border:0; display:block; margin:0 auto 1.5em }
+
+/* Galerie */
+.bildergalerie{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px; justify-items:center; margin-bottom:2em;
+}
+@media (max-width:360px){
+  .bildergalerie{ grid-template-columns:repeat(auto-fit,minmax(120px,1fr)) }
+}
+.bildergalerie img{
+  width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;
+  border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+#noImages, #timestamp{ color:var(--muted) }
+
+/* Lightbox (falls vorhanden) */
+.lightbox{
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,.8); justify-content:center; align-items:center;
+}
+.lightbox img, .lightbox video{ max-width:90vw; max-height:90vh; box-shadow:0 0 20px rgba(0,0,0,.5) }
+.lightbox-close{ position:absolute; top:20px; right:30px; color:#fff; font-size:2em }
+
+/* Fazit-Box (optisch wie Badlands) */
+.abschluss{
+  --bg:#ffffff; --mutedlocal:#6c757d;
+  background:var(--bg); border:1px solid var(--bd); border-radius:16px;
+  padding:1.25rem; margin:2rem 0;
+}
+@media (prefers-color-scheme:dark){
+  .abschluss{ --bg:#0b0d10; --mutedlocal:#9aa4ad }
+}
+.abschluss h2{ margin:.2rem 0 1rem }
+.abschluss h3{ margin:1rem 0 .5rem; color:var(--mutedlocal) }
+.abschluss .badges{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:.5rem; margin:0 0 .5rem; padding:0; list-style:none;
+}
+.abschluss .badges li{
+  background:var(--chip); border:1px solid var(--bd);
+  padding:.6rem .7rem; border-radius:12px; display:flex; flex-direction:column; gap:.15rem;
+}
+.abschluss .badges span{ font-size:.76rem; color:var(--mutedlocal) }
+.abschluss .badges strong{ font-size:1.05rem }
+.abschluss .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:.6rem }
+.abschluss .card{ border:1px solid var(--bd); background:var(--chip); border-radius:12px; padding:.7rem }
+.abschluss .list{ margin:.3rem 0 0; padding-left:1.1rem; text-align:left }
+.abschluss .list li{ margin:.2rem 0 }
+
+/* “Überblick”-Listen hübsch machen, wenn keine .abschluss-Struktur genutzt wird */
+h3 + ul{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:.5rem; margin:0 0 .5rem; padding:0; list-style:none;
+}
+h3 + ul > li{
+  background:var(--chip); border:1px solid var(--bd);
+  padding:.6rem .7rem; border-radius:12px;
+}
+h3 + ul > li > *{ display:block }
+h3 + ul > li > em, h3 + ul > li > span{ font-size:.76rem; color:var(--muted) }
+
+/* Stacked FABs (Galerie/Fazit) – Styles; das Einfügen übernimmt optionales JS */
+.fab-stack{
+  position:fixed; right:max(12px, env(safe-area-inset-right)); top:max(12px, env(safe-area-inset-top));
+  z-index:9999; display:flex; flex-direction:column; gap:8px;
+}
+.fab-pill{
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.5rem .7rem; border-radius:999px; border:1px solid var(--bd);
+  background:#fff; text-decoration:none; box-shadow:0 6px 20px rgba(0,0,0,.12); font-weight:600;
+}
+.fab-pill:hover{ transform:translateY(-1px) }
+@media (prefers-color-scheme:dark){
+  .fab-pill{ background:#11161b; border-color:#2a2e33; color:var(--fg); box-shadow:0 6px 20px rgba(0,0,0,.5) }
+}
+@media (max-width:480px){ .fab-pill span{ display:none } }
+
+/* Footer Lesbarkeit */
+footer{ color:var(--muted) }
