@@ -358,15 +358,31 @@
 document.addEventListener('DOMContentLoaded', function(){
   const stack = document.querySelector('.fab-stack');
   if (!stack) return;
-  if (document.getElementById('badlands-prev')) {
+
+  // Badlands-Bubble ergänzen, falls Ziel existiert & noch nicht vorhanden
+  if (document.getElementById('badlands-prev') && !stack.querySelector('a[href="#badlands-prev"]')) {
     const a = document.createElement('a');
     a.className = 'fab-pill';
     a.href = '#badlands-prev';
     a.setAttribute('aria-label','Zur Badlands-Vorschau');
-    // wie auf der Badlands-Seite: horizontaler Pfeil + Name
-    a.innerHTML = '← <span>Badlands</span>';
+    a.innerHTML = '<span>Badlands</span>'; // Icon setzen wir gleich zentral
     stack.appendChild(a);
   }
+
+  // Einheitliche Typo + passendes Icon je Ziel (wie Badlands)
+  const iconMap = new Map([
+    ['#galerie',       '↘'],
+    ['#abschluss',     '↙'],
+    ['#badlands-prev', '←']
+  ]);
+
+  stack.querySelectorAll('.fab-pill').forEach(a=>{
+    const href  = a.getAttribute('href') || '';
+    const icon  = iconMap.get(href) || '←';
+    const label = (a.querySelector('span')?.textContent || a.textContent)
+                  .replace(/^[↘↙←→↗↖]\s*/, '').trim();
+    a.innerHTML = icon + ' <span>' + label + '</span>';
+  });
 });
 </script>
 </body>
