@@ -365,31 +365,28 @@ document.addEventListener('DOMContentLoaded', function(){
     a.className = 'fab-pill';
     a.href = '#badlands-prev';
     a.setAttribute('aria-label','Zur Badlands-Vorschau');
-    a.textContent = 'Badlands'; // Label wird unten einheitlich gesetzt
+    a.innerHTML = '<span class="ico">→</span><span class="label">Badlands</span>';
+    a.querySelector('.ico').style.setProperty('--rot','180deg'); // ←
     stack.appendChild(a);
   }
 
-  const iconMap = {
-    '#galerie':       '↘',
-    '#abschluss':     '↙',
-    '#badlands-prev': '←'
+  // Einheitlicher Stil + Drehung pro Ziel
+  const rot = {
+    '#galerie':       '-45deg', // ↘
+    '#abschluss':     '225deg', // ↙ (= 180 + 45)
+    '#badlands-prev': '180deg'  // ←
   };
 
   stack.querySelectorAll('.fab-pill').forEach(a=>{
     const href  = a.getAttribute('href') || '';
-    const raw   = a.querySelector('span')?.textContent || a.textContent || '';
-    let   label = raw.replace(/^[↘↙←→↗↖]\s*/, '').trim();
+    const raw   = a.textContent.trim();
+    // Label robust ermitteln (ohne evtl. altes Icon)
+    const label = (a.querySelector('.label')?.textContent || raw.replace(/^[↘↙←→↗↖]\s*/,'')).trim() || (
+      href==='#galerie' ? 'Galerie' : href==='#abschluss' ? 'Fazit' : 'Badlands'
+    );
 
-    // Fallback-Labels, falls leer
-    if (!label) {
-      if (href === '#galerie')       label = 'Galerie';
-      else if (href === '#abschluss') label = 'Fazit';
-      else if (href === '#badlands-prev') label = 'Badlands';
-      else label = 'Link';
-    }
-
-    const icon = iconMap[href] || '←';
-    a.innerHTML = icon + ' <span>' + label + '</span>'; // Einheitlicher Stil wie Badlands
+    a.innerHTML = '<span class="ico">→</span><span class="label">'+label+'</span>';
+    a.querySelector('.ico').style.setProperty('--rot', rot[href] || '180deg');
   });
 });
 </script>
