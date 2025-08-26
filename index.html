@@ -154,6 +154,25 @@
 /*===fab-top===*/.totop-fab{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:9999;display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .7rem;border-radius:999px;border:1px solid #e9ecef;background:#ffffff;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.12);font-weight:600}.totop-fab:hover{transform:translateY(-1px)}.totop-fab:focus{outline:2px solid #1d3557;outline-offset:2px}@media(prefers-color-scheme:dark){.totop-fab{background:#11161b;border-color:#2a2e33;color:#e8ecef;box-shadow:0 6px 20px rgba(0,0,0,.5)}}
 </style>
 <link rel="stylesheet" href="basajaun_theme_badlands.css?v=2">
+  <style id="basajaun-hotfix">
+  /* Galerie: Grid erzwingen, fixe Breiten überschreiben */
+  .bildergalerie{
+    display:grid !important;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:10px;
+    justify-items:center;
+    margin-bottom:2em;
+  }
+  .bildergalerie > div{ width:100% !important; }
+  .bildergalerie img{
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:4/3;
+    object-fit:cover;
+    border-radius:6px;
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+  }
+</style>
 </head>
 <body>
 <div id=\"top\" aria-hidden=\"true\"></div>
@@ -262,14 +281,10 @@
       <a class="btn" href="etappenplan.csv" download>Etappenplan (CSV)</a>
     </div>
   </details>
-  <div class="footer-minor">
-    <div style="color:#6c757d">Fragen, Daten oder GPX? → <a href="mailto:enrique.doubleyou@gmail.com">enrique.doubleyou@gmail.com</a></div>
-  </div>
+  
 </section>
 </main>
-  <div style="display:flex;justify-content:center;margin:.5rem 0 0;">
-  <a class="link-card" href="https://enrique-doubleyou.github.io/badlands/" title="Zur Badlands-Seite">Badlands 2025 ↗</a>
-</div>
+  
   <div class="mini-prev" id="badlands-prev">
   <a class="mini-card" href="https://enrique-doubleyou.github.io/badlands/" title="Zur Badlands-Seite">
     <img class="mini-thumb" src="https://enrique-doubleyou.github.io/badlands/banner_badlands.jpg" alt="Badlands Banner">
@@ -279,6 +294,9 @@
     </div>
   </a>
 </div>
+  <div class="footer-minor">
+    <div style="color:#6c757d">Fragen, Daten oder GPX? → <a href="mailto:enrique.doubleyou@gmail.com">enrique.doubleyou@gmail.com</a></div>
+  </div>
   <footer>&copy; 2025 Robbie & Kike</footer>
 
 <script>
