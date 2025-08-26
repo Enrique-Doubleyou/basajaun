@@ -354,7 +354,7 @@
 
 <a class="totop-fab" href="#top" aria-label="Nach oben">↑ <span>Nach&nbsp;oben</span></a>
 <script src="enhance_basajaun.js" defer></script>
-  <script>
+<script>
 document.addEventListener('DOMContentLoaded', function(){
   const stack = document.querySelector('.fab-stack');
   if (!stack) return;
@@ -363,7 +363,8 @@ document.addEventListener('DOMContentLoaded', function(){
     a.className = 'fab-pill';
     a.href = '#badlands-prev';
     a.setAttribute('aria-label','Zur Badlands-Vorschau');
-    a.innerHTML = '↙ <span>Badlands</span>';
+    // wie auf der Badlands-Seite: horizontaler Pfeil + Name
+    a.innerHTML = '← <span>Badlands</span>';
     stack.appendChild(a);
   }
 });
