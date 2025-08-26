@@ -152,13 +152,11 @@
   }
 /*===util===*/html{scroll-behavior:smooth}/*===abschluss-auto-theme===*/.abschluss{--bg:#ffffff;--fg:#212529;--muted:#6c757d;--acc:#1d3557;--bd:#e9ecef;--chip:#f8f9fa;--ok:#00b37a;--warn:#ffb020;--err:#ff5a5f;scroll-margin-top:80px}@media(prefers-color-scheme:dark){.abschluss{--bg:#0b0d10;--fg:#e8ecef;--muted:#9aa4ad;--acc:#3aa0ff;--bd:#24303a;--chip:#12171c}}
 /*===fab-top===*/.totop-fab{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:9999;display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .7rem;border-radius:999px;border:1px solid #e9ecef;background:#ffffff;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.12);font-weight:600}.totop-fab:hover{transform:translateY(-1px)}.totop-fab:focus{outline:2px solid #1d3557;outline-offset:2px}@media(prefers-color-scheme:dark){.totop-fab{background:#11161b;border-color:#2a2e33;color:#e8ecef;box-shadow:0 6px 20px rgba(0,0,0,.5)}}
-<link rel="stylesheet" href="basajaun_theme_badlands.css?v=1">
 </style>
+<link rel="stylesheet" href="basajaun_theme_badlands.css?v=2">
 </head>
 <body>
 <div id=\"top\" aria-hidden=\"true\"></div>
-
-<a class="toc-fab" href="#abschluss" aria-label="Zum Fazit springen" title="Zum Fazit">↘ <span>Zum&nbsp;Fazit</span></a>
 
   <header>
     <img src="banner.jpg" alt="Bannerfoto Basajaun">
@@ -178,7 +176,7 @@
       <iframe class="responsive-frame" src="https://www.komoot.de/tour/2411391738/embed?ref=aso&share_token=apm76j26O6Zk7arVOa8ENBGYzGmmvaQWmMZzM63wxKdv8Si3oJ" title="Komoot Basajaun Route"></iframe>
     </div>
 
-    <h2>📸 Bildergalerie</h2>
+    <h2 id="galerie">📸 Bildergalerie</h2>
     <div id="bildergalerie" class="bildergalerie"></div>
     <p id="noImages" style="text-align: center; color: #999; display: none;">Noch keine Event-Bilder verfügbar.</p>
     <p id="timestamp" style="font-size: 0.8em; color: #666;"></p>
@@ -269,6 +267,9 @@
   </div>
 </section>
 </main>
+  <div style="display:flex;justify-content:center;margin:.5rem 0 0;">
+  <a class="link-card" href="https://enrique-doubleyou.github.io/badlands/" title="Zur Badlands-Seite">Badlands 2025 ↗</a>
+</div>
   <footer>&copy; 2025 Robbie & Kike</footer>
 
 <script>
