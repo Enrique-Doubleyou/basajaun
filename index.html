@@ -110,6 +110,24 @@
       font-size: 2em;
       text-decoration: none;
     }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 3em;
+      line-height: 1;
+      text-decoration: none;
+      padding: .1em .35em;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .lightbox-nav:hover { opacity: .75; }
+    .lightbox-prev { left: 8px; }
+    .lightbox-next { right: 8px; }
+    @media (max-width:480px){
+      .lightbox-nav{ font-size: 2.2em; }
+    }
   
   /* === Abschluss & Ressourcen (scoped, light theme) === */
   .abschluss{--bg:#ffffff;--fg:#212529;--muted:#6c757d;--acc:#1d3557;--bd:#e9ecef;--chip:#f8f9fa}
@@ -285,11 +303,11 @@
 </main>
   
   <div class="mini-prev" id="badlands-prev">
-  <a class="mini-card" href="https://enrique-doubleyou.github.io/badlands/" title="Zur Badlands-Seite">
-    <img class="mini-thumb" src="https://enrique-doubleyou.github.io/badlands/banner_badlands.jpg" alt="Badlands Banner">
+  <a class="mini-card" href="https://enrique-doubleyou.github.io/badlands-hub" title="Zum Badlands-Hub">
+    <img class="mini-thumb" src="https://enrique-doubleyou.github.io/badlands/banner_badlands.jpg" alt="Badlands-Hub Vorschau">
     <div class="mini-meta">
-      <strong>Badlands — Planung & Live</strong>
-      <span>Galerie · Livetracking · Strategie</span>
+      <strong>Badlands-Hub</strong>
+      <span>Archiv, aktuelle und zukünftige Rennen</span>
     </div>
   </a>
 </div>
@@ -299,56 +317,116 @@
   <footer>&copy; 2025 Robbie & Kike</footer>
 
 <script>
+  // === Basajaun 2025 Live-Galerie (Cloudinary) ===
+  const CLOUD_NAME = 'c53b7kse';
+  const TAG = 'Basajaun25';
+  const LIST_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${TAG}.json?max_results=500`;
+
+  function thumbUrl(it){ return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_360,h_270,c_fill,q_auto,f_auto/${it.public_id}.${it.format}`; }
+  function fullUrl(it){ return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1600,q_auto,f_auto/${it.public_id}.${it.format}`; }
+
   const galerieContainer = document.getElementById("bildergalerie");
   const noImagesText = document.getElementById("noImages");
   const timestamp = document.getElementById("timestamp");
+  const seen = new Set();
+  const items = []; // geladene Bilder in Anzeigereihenfolge
 
-  async function ladeBilder() {
-    try {
-      // 1. JSON mit Cachebuster laden
-      const res = await fetch(`bilder.json?t=${Date.now()}`);
+  // Eine gemeinsame Lightbox für alle Bilder, damit Weiter/Zurück ohne Schließen geht
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  lightbox.id = "shared-lightbox";
+  lightbox.innerHTML = `
+    <a href="#" class="lightbox-close" aria-label="Schließen">&times;</a>
+    <a href="#" class="lightbox-nav lightbox-prev" aria-label="Vorheriges Bild">&#8249;</a>
+    <img alt="Großansicht">
+    <a href="#" class="lightbox-nav lightbox-next" aria-label="Nächstes Bild">&#8250;</a>
+  `;
+  document.body.appendChild(lightbox);
+  const lbImg = lightbox.querySelector("img");
+  let currentIndex = -1;
+
+  function showAt(index){
+    if(!items.length) return;
+    currentIndex = (index + items.length) % items.length;
+    lbImg.src = fullUrl(items[currentIndex]);
+    lightbox.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+  function closeLightbox(){
+    lightbox.style.display = "none";
+    document.body.style.overflow = "";
+  }
+  function showNext(){ showAt(currentIndex + 1); }
+  function showPrev(){ showAt(currentIndex - 1); }
+
+  lightbox.querySelector(".lightbox-close").addEventListener("click", (ev)=>{ ev.preventDefault(); closeLightbox(); });
+  lightbox.querySelector(".lightbox-next").addEventListener("click", (ev)=>{ ev.preventDefault(); showNext(); });
+  lightbox.querySelector(".lightbox-prev").addEventListener("click", (ev)=>{ ev.preventDefault(); showPrev(); });
+  lightbox.addEventListener("click", (ev)=>{ if(ev.target === lightbox) closeLightbox(); });
+
+  document.addEventListener("keydown", (ev)=>{
+    if(lightbox.style.display !== "flex") return;
+    if(ev.key === "Escape") closeLightbox();
+    else if(ev.key === "ArrowRight") showNext();
+    else if(ev.key === "ArrowLeft") showPrev();
+  });
+
+  // Swipe: links = nächstes Bild, rechts = vorheriges Bild
+  let touchStartX = null;
+  lightbox.addEventListener("touchstart", (ev)=>{
+    if(ev.touches.length === 1) touchStartX = ev.touches[0].clientX;
+  }, {passive:true});
+  lightbox.addEventListener("touchend", (ev)=>{
+    if(touchStartX === null) return;
+    const dx = ev.changedTouches[0].clientX - touchStartX;
+    const threshold = 40;
+    if(dx > threshold) showPrev();
+    else if(dx < -threshold) showNext();
+    touchStartX = null;
+  }, {passive:true});
+
+  function addItem(it){
+    if(!it || !it.public_id || seen.has(it.public_id)) return;
+    seen.add(it.public_id);
+    items.push(it);
+    const myIndex = items.length - 1;
+
+    const wrap = document.createElement("div");
+    const link = document.createElement("a");
+    link.href = "#";
+    const img = new Image();
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.alt = "Renn-Foto Basajaun 2025";
+    img.src = thumbUrl(it);
+    link.appendChild(img);
+    wrap.appendChild(link);
+    galerieContainer.appendChild(wrap);
+
+    link.addEventListener("click", (ev)=>{ ev.preventDefault(); showAt(myIndex); });
+  }
+
+  async function ladeBilder(){
+    try{
+      const res = await fetch(LIST_URL, {cache:"no-store"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
       const data = await res.json();
-
-      // 2. Versionsnummer speichern (für Bild-URLs)
-      const version = data.version || "v1";
-      sessionStorage.setItem("bilderVersion", version);
-
-      // 3. Bilder verarbeiten
-      if (data.bilder && data.bilder.length > 0) {
-        data.bilder.slice(0, 30).forEach((imgName, index) => {
-          const wrapper = document.createElement("div");
-          const link = document.createElement("a");
-          link.href = `#img${index + 1}`;
-
-          const thumbnail = document.createElement("img");
-          thumbnail.src = `images/${imgName}?v=${version}`;
-          thumbnail.alt = "";
-          link.appendChild(thumbnail);
-          wrapper.appendChild(link);
-          galerieContainer.appendChild(wrapper);
-
-          const lightboxDiv = document.createElement("div");
-          lightboxDiv.className = "lightbox";
-          lightboxDiv.id = `img${index + 1}`;
-          lightboxDiv.innerHTML = `
-            <a href="#" class="lightbox-close">&times;</a>
-            <img src="images/${imgName}?v=${version}" alt="Großansicht">
-          `;
-          document.body.appendChild(lightboxDiv);
-        });
-
-        // 4. Zeit anzeigen
-        timestamp.textContent = "Letzte Aktualisierung: " + new Date(data.timestamp).toLocaleString("de-DE");
+      const sorted = (data.resources||[]).slice().sort((a,b)=> new Date(a.created_at)-new Date(b.created_at));
+      sorted.forEach(addItem);
+      if(sorted.length){
+        timestamp.textContent = "Letzte Aktualisierung: " + new Date().toLocaleString("de-DE");
+        noImagesText.style.display = "none";
       } else {
         noImagesText.style.display = "block";
       }
-    } catch (e) {
+    }catch(e){
       console.error("Fehler beim Laden der Bilder:", e);
       noImagesText.style.display = "block";
     }
   }
-
   ladeBilder();
+  setInterval(ladeBilder, 5*60*1000);
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) ladeBilder(); });
 </script>
 
 <a class="totop-fab" href="#top" aria-label="Nach oben">↑ <span>Nach&nbsp;oben</span></a>
